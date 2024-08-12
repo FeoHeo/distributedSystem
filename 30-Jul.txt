@@ -1,0 +1,117 @@
+**Java
+	*Primary goals
+		- Simple, OO, familiar
+		- Robust and secure
+		- Architecture-neutral and portable - it compile code to bytecode(Biggest selling point)
+		- Executed with high performance
+		- Interpreted, threaded, dynamic (Second biggest selling point - maybe)
+
+	*Bytecode and JVM
+		- Android is built upon the JVM and was run on a simplified Linux kernel
+		- USe Just in time - compiles bytecode sequences into the machine code
+		- JVM is a stack machine - not the local machine stack
+	*References, Pointers, Safely
+		- Cannot make a pointer
+	*Java and JUnit
+		- JUnit is a common when testing frameworks	
+	*Other use annotation
+		- MethodOrder.Random 
+	*Stub Retrieval
+		- Servers register themselves with RMIRegistry
+		+ Registration by Name
+		+ Sends a copy of the Client Stub to the registry
+		+ Server creates Skeleton and associated socket to match
+	*Remote Objects
+		- A remote object is itself defined by RMI inteface
+		+ Remote objects may be pased in RMI call
+		+ Stub is transferred
+		+ Syntax of call remains the same
+	*Serialisation
+		- Any Object moving between VM must be serialisable
+			+ They implement the java.io.serializable interface
+			+ The core API classes already are serialisable
+			+ User defined classes are not serialisable by default
+			+ Standards and library: JSON(Java Object), XML, PRotocol Buffers (Google)
+			+ Depth of serialization of data structures require thought
+	*Exception
+		- Rmi is very similar to original RPC
+		- Additional exception handling
+
+
+**Process
+	*Process if the abstraction of computation state
+		- Aprocess is the dynamic execution stream over the state
+	*In general (hardware oriented view)
+		- Registers
+		- Code
+		- Data
+		- I/O - files, network connections, inter-process channels
+	*Virtualisation of execution engine may present a different state
+		- The JVM
+
+	*Program vs Process
+		- Program: embodies the descrption of how a process will execute
+			+ Executable code, data space values, does not change
+		- Process: embodies the STATE of an executing program
+			+ Built from a program
+			+ Many instances of process can run in one program
+			+ Dynamic: changing data values, threads of control through program code
+
+	*Context SWitching - This is very expensive
+		- Processes
+		+ OS construct - unit of execution
+		+ In order to run many processes - must switch
+		
+		- Switch occurs for many reasons
+		+ I/O
+		+ Time quantum
+		+ Preemtion (Lower priority will get overrun by higher prio)
+	
+		- SWitching an entire processes is relatively expensive
+		+ More house keeping
+		+ Loss of locality - cache of all kinds
+
+	* IPC - Inter process communication
+		- Processes need to communicate to be useful
+		+ Exchange data
+		+ Coordinate
+
+		- Many communicating processes build up to form system
+
+	*MPI-Message Passing Interface
+		- This is one of the fundamental building blocks of High Performance Computing
+		- Is powerful and can do a lot like creating a 3D network of nodes
+
+	*Threads
+		- Concurrency within the one process
+		+ Many possible models - language abstractions help
+
+		- No need to switch memory space
+		+ Much faster
+		+ Locality preserved
+
+		- Data is shared between threads
+		+ no isolation
+
+	*Multiple threads
+		- Can exploit multiple cpu on node with one process
+		+ Thread manager becomes mini OS - virtualizes execution internally
+
+		- Mitigate I/O and Communication
+		+ Keep executing some thread whilst others stall on IO
+
+	*OS vs Multi-threaded program
+		-OS
+			+ Process: memory space and IO
+			+ Threads: these are shceduled by the OS
+		- Language can provide thread abstraction
+			+ Java runtime manages Java thread, many java threads may run on fewer OS threads
+			+ Java threads use allocated OS threads
+		
+	*Java threads - future
+		- can get future from an executing thread
+	*Java threads - Executors
+		- Look into the 'ExecutorService' package
+	*Java synchronisation
+		- So an object will be locked out if it's being used and return immediately would prevent the atm problem (be sure to not read the object after running operations - return it immediately)
+[Need to provide the class 'run()' in Java in order to run the thread]

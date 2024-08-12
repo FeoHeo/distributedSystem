@@ -1,0 +1,60 @@
+**Thread
+*Semaphores
+	- Simple abstractions to control access to a common resource
+	+ Signal and wait
+	- Variable x that allows interaction via 2 operations
+	+ wait(x): while (x==0) wait; --x;
+	+ signal(x): ++x;
+	-Both operations are done atomically
+
+*Distributed Synchronization
+	- MUltiple processes/programs on different machines share the same resource: printer, file
+
+*General's problem
+	- Army A1 and A2 need to communicate but their messengers may be captured by army B
+	- Clients/servers may crash, right in the middle of an RPC call
+	- Sent ad received messages may be lost
+
+*Distributed Synchronization Mechanisms
+	- Logical clocks
+	- Consensus
+	- Data consistency protocols
+	- Distributed transactions
+
+*Happens Before
+	- If we don't know a happens brefore b or b happens before a then a and b are concurrent
+
+*Lamport: Clocks
+	- Each process has a clock function Ci
+	- Ci(a) assigns a timestamp to event a in process i
+	- Clock condition
+	+ For any events a and b in process i
+	+ If a then b, then Ci(a) < Ci(b)
+	
+	-> Make clock function a local counter
+		+ Rule1: Each process Pi increments Ci between any successive events
+		+ R2: On sned event a, the msg m contains Tm = Ci(a)
+			~ On receive of msg, if the counter within the received msg is > current clock then set align local with the message clock
+	- Partial Order of events:
+
+*Lamport: total order
+	- Clocks only provide partial order
+	- Create Total Order with tie break
+		+ Deterministic
+		+ Globally understood
+	- Rule:
+		+ If a is event in Pi and b is event in Pj then a happens before b iff
+
+*Cristian's algo
+	- Request time, get reply:
+	- Sender's time was T between t1 and t2
+	- Receiver sets time to d/2
+	
+*Berkley algo
+	- Master uses Cristian's algo to get time from many clients
+		+ Computes average time
+		+ Can discard outliers
+	- Sends time adjustments back to all clients
+
+=> We want to provide some sense of security in concurrency in distributed system
+
