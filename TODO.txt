@@ -1,0 +1,12 @@
+Content Server is basically a database server that will take a JSON file and upload that to the Aggregation server. Aggre server will serve as both aggregation point for data and a mini-database
+that serves data to Client. There might be multiple content servers
+
+[1: Java Messaging]
+Implement a simple Java RMI to handle simple message input as string (Aggregation - Content - Client)
+	-> RMI handle REST request (Aggregation)
+	-> RMI handle JSON (Aggregation - Content)
+
+[2: Lamport clock]
+Make a simple Lamport clock (do this on a smaller test server first)
+	-> Implement in servers (Aggregation - Content - Client)
+
