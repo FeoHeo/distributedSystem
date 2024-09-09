@@ -1,5 +1,5 @@
-Content Server is basically a database server that will take a JSON file and upload that to the Aggregation server. Aggre server will serve as both aggregation point for data and a mini-database
-that serves data to Client. There might be multiple content servers
+Aggre Server is basically a replica server for data. File that stores the data will exist in a local machine, when server started, Aggre server will receive the data from the Content servers and the data File on Aggre will get updated based on the most recent update of the Content Server, there will be multiple Content servers but implement one first.
+
 
 [1: Java Messaging]
 Implement a simple Java RMI to handle simple message input as string (Aggregation - Content - Client)
