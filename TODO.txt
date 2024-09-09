@@ -6,7 +6,12 @@ Implement a simple Java RMI to handle simple message input as string (Aggregatio
 	-> RMI handle REST request (Aggregation)
 	-> RMI handle JSON (Aggregation - Content)
 
-[2: Lamport clock]
+[2: Lamport clock] (This should not be the first thing that you implement)
 Make a simple Lamport clock (do this on a smaller test server first)
 	-> Implement in servers (Aggregation - Content - Client)
+
+[marking]: Finish the basic functionality for Appendix B will get you passing marks + Lamport + Error handling
+
+Resources:
+https://www.geeksforgeeks.org/socket-programming-in-java/
 
