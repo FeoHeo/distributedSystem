@@ -3,15 +3,26 @@ that serves data to Client. There might be multiple content servers
 
 [1: Java Messaging]
 Implement a simple Java RMI to handle simple message input as string (Aggregation - Content - Client)
-	-> RMI handle REST request (Aggregation)
+	-> RMI handle drafted REST request (Aggregation)
+	-> PUT works for one content server (Aggregation - Content)
+	-> GET works for many read clients (Aggregation - Client)
+	-> Old data enpunding (Aggregation)
 	-> RMI handle JSON (Aggregation - Content)
 
-[2: Lamport clock] (This should not be the first thing that you implement)
+[2: Lamport clock] (This should not be the first thing that you implement, finish the basic functionalities first)
 Make a simple Lamport clock (do this on a smaller test server first)
 	-> Implement in servers (Aggregation - Content - Client)
+
+[Full functionality refers to]
+    Lamport clocks are implemented
+    All error codes are implemented
+    Content servers are replicated and fault tolerant 
+-> All these plus good testing will give decent marks
+
 
 [marking]: Finish the basic functionality for Appendix B will get you passing marks + Lamport + Error handling
 
 Resources:
-https://www.geeksforgeeks.org/socket-programming-in-java/
+https://www.geeksforgeeks.org/socket-programming-in-java/ - for HTTP request and socket programming
+
 
