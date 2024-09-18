@@ -4,6 +4,7 @@ Aggre Server is basically a replica server for data. File that stores the data w
 [1: Java Messaging]
 Implement a simple Java RMI to handle simple message input as string (Aggregation - Content - Client)
 	-> RMI handle drafted REST request (Aggregation)
+		-> Will need a socket server to handle Client connections
 	-> PUT works for one content server (Aggregation - Content)
 	-> GET works for many read clients (Aggregation - Client)
 	-> Old data enpunding (Aggregation)
