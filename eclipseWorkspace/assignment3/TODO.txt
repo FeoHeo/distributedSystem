@@ -1,0 +1,85 @@
+Make a Paxos that can accommodate 9 nodes with varied status
+
+
+On the day of voting, one councillor(proposer) from M1-9 will send out a proposal. So it will be a single-proposer
+Default proposer would be [1] cause [1] is most active
+
+
+** Steps to make a Paxos
+
+*Node
+- Hand code a proposer and acceptor node
+	+ Will code acceptor first as server that receives messages from client (finished)
+	+ There will be a function that handle incoming proposal and one for incoming commit message. Print out true/false when finished/fail (finished)
+- Start 2 independent process and have them communicate via sockets (could do this via starting argument) (finished)
+- Make a java program that start 3 nodes, assign leader to one node and print out their status each round (this program will likely run on PORT + 0 and the other will be PORT + 1->9 respectively)
+- Implement full functionality
+	+ Full functionality will mostly be done after you are done with 3 node functionality but I also wanna add some extra tools for debugging use like iterate through each
+	propose round -> accept round -> finish. But take this however you like
+*Connection
+
+- If Proposer doesn't hear back from the majority of the node -> abort accept message.
+- If Proposer receives any Reject coming from a prepare (meaning the current round isn't biggest), then proposer must resend prepare. Typically this would not happen in 
+single proposer case cause roundId can only go up when a proposer propose. This functionality can go on hold till you plan to make a second proposer
+
+*Marking
+
+
+
+30 points – Paxos implementation works in the case where all M1-M9 have immediate responses to voting queries (Functionality with 9 acceptor)
+
+30 points – Paxos implementation works when M1 – M9 have responses to voting queries suggested by several profiles (immediate response, small delay, large delay and no response), including when M2 or M3 propose and then go offline
+
+10 points -  Paxos implementation works when two councillors send voting proposals at the same time (Double proposer? - maybe implement this later)
+
+
+*Current problem
+- Proposer not accepting and streaming data to multiple ports. There are 2 approach
+	+ 1 -> Use channel as suggested on StackOverflow 
+	+ 2 -> Make a function for connection and spawn a new thread for each new connection (Implementing)
+	
+- Multithreading problem: Currently there is a bit of an error, Manager is not working atm and still need to start scripts seperately, might need to look into this later on.
+	+ Behavior, Manager starts 5000 and 5001 but only print output of 5001, or so it seems. Need to ensure everything is working first on Proposer and Acceptor before getting back to this
+
+
+*Note
+Currently will try and make a prepare handler and a accept handler plus send promise and send accept status function. Message will be in the following format
+
+[Title(msg purpose)]:[value]
+
+
+
+
+
+
+
+
+
+
+
+
+[Logging stuff]
+*Progress
+- Proposer seems to be working at least, it is outputting data to multiple ports now I need to do the same to Acceptor and blast data to other ports in case of a successful accept
+- Just realized that if I wanted to stream data to another Acceptor node then I'll have to make a thread for each Acceptor and stream data to that thread like Proposer
+- Nodes can now interact between eachother, now I just need to export launch group somehow or instruct them to start 9 individual nodes (may not be good but will be if progress is slow)
+	+ so currently, using inputs number to determine the current port, will also try this approach and start 9 Acpt, probably won't work (Truly does not work, abolish this and move on)
+	+ Have seperated connection to a function, now I only need to store the outStreams to an array and iterate through each port to send data
+*What now?
+- Make Acceptor send data to each other also on a Accept message. (Finished)
+- Update the program to accommodate 9 nodes (finished)
+- Make a launch group for 9 nodes and test connections (finished)
+- Right now on Proposer is using a while loop on EACH THREAD that prompt user input, fix this so that msg get streamed to every node instead (Finished)
+	+ Switched to using a function send() inside the ConnectionHandler class, this will send msg to the current thread's node (Finished)
+- Acceptor issue: rightnow fault recovery works but msg is being bounced between acceptors (finished)
+- Bro you forgot to add sending stuff for majority (finished)
+- Also forgot to allow for other candidates (finished)
+- make an interceptor for nodes (finished)
+- Add a thing that causes delay (finished)
+- Write README
+- Finish everything
+
+*Thing you might wanna note
+- One thing about Sockets and ServerSocket. If you wanna make a server contact another Server, you'll need to make a 
+client connection via Socket like outServer = new Socket() but you'll have to listen on YOUR OWN PORT AND NOT THE OTHER SERVER'S PORT YOU STUPID
+via ServerSocket.accept()
