@@ -1,0 +1,12 @@
+** Goal: Transform the Simple Proposer into nodes that can handle a byzantine failure
+
+- So if a node send out incorrect data then all node still have an agreement.
+- Make all node reach a consensus when there is data collision. So will wait for other nodes before pushing data to stack (will also need to account for timeout)
+- Could try something simple like 0 for 'false' and 1 for 'true' (for now, the node will just output '0' constantly) - ongoing
+
+- Hypothetical situation: All nodes will need to reach a consensus and agree on something when reached a timeout (a few other nodes did not respond).
+Could do something like when a node has heard from a majority of nodes then itself will push the change if majority reached a consensus (note that BFT could tolerate ANY ERROR that happens to n+1 node in a 3n+1 total)
+
+
+** Finished goals
+- Need to simulate a node that is the betrayer (Could use a SimpleAcceptor for this like can manually specify which one is the betrayer) - Finished

@@ -1,0 +1,9 @@
+** This is a simple log for debugging to note down behaviours
+
+* Testing stuff
+- Remember to use the format "Corrupt:5000" and "Uncorrupt:5000" for corrupt and uncorrupt
+
+
+* Behaviour log
+- Corrupt function test successful, will proceed to print to client stream. The client will manually send out corrupted message at the moment 
+- Planned what to do with the next BFT implementation. Initially thought that 3n+1 system can tolerate n+1 out-of-service node but turns out BFT can only tolerate n error of ANY KIND (timeout, malicious behaviour, ...)

@@ -1,0 +1,11 @@
+** Daily frequent things you need to do
+- Not hungry and have done your hygiene
+- Not scrolling or watching streams (if you do, make sure it's either PirateSoftware or FerretSoftware)
+- Put on some coding music (not the head-bang stuff)
+- Make a small achievable goal in 30 minutes
+- Finish that goal
+
+** Finish log
+- 20/12 : test if corrupt_action function is running (no need to make it work yet) : achieved
+- 20/12 : make it so that it will output corrupt status to Proposer also (I'm too lazy to change terminals) : achieved
+- 20/12 : push changes to git (only push the bzt folder)
