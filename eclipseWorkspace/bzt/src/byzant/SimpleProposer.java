@@ -36,7 +36,7 @@ public class SimpleProposer {
 			        String serverResponse;
 			        while ((serverResponse = in.readLine()) != null) {
 			            System.out.println("Server " + localPort + " response: " + serverResponse);
-			            if (serverResponse.equalsIgnoreCase("Reject")) {
+			            if (serverResponse.equals("Reject")) {
 //			                synchronized (SimpleProposer.class) {
 			                    biggestRoundId = biggestRoundId + 3;
 //			                }
@@ -46,6 +46,15 @@ public class SimpleProposer {
 			            	majorityCurr++;	// Increment to reach majority
 			            	System.out.println("["+this.localPort+"] responded majority is "+majorityCurr);
 //			                out.println("Accept:" + proposedId);
+			            }
+			            
+			            if(serverResponse.equals("B-Reject")) {
+			            	biggestRoundId = biggestRoundId + 3;
+			            	System.out.println("Retrying with higher b-round: " + biggestRoundId);
+			            	out.println("B-Prepare:"+biggestRoundId);
+			            } else if(serverResponse.startsWith("B-Promise")) {
+			            	majorityCurr++;
+			            	System.out.println("["+this.localPort+"] responded majority is "+majorityCurr);
 			            }
 			        }
 			    } catch (IOException e) {

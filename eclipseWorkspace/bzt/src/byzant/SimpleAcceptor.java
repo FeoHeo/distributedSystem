@@ -13,7 +13,9 @@ public class SimpleAcceptor {
     private static int acceptVal = 0;
     private static int startPort = 5000;	// To connect to the other Acceptor
     private static int delay = 10;		// To simulate delay between messages
-    private static Map<Double,Integer> list = new TreeMap<> ();
+    private static int majority = (nodeNum/2)+1;	// Number of nodes to be considered majority
+    private static Map<Double,Integer> list = new TreeMap<> ();	// List to log Paxos value
+    public static boolean bztStatus = false;
     
     
     private static void log(String message) {
@@ -44,14 +46,25 @@ public class SimpleAcceptor {
 //        otherOut.println("Confirmed:" + acceptId + ":" + biggestRoundId);
     }
     
+    public static void byzantine_action(PrintWriter[] nodeOutput , PrintWriter outStream) {
+    	log("Sending Byzantine confirmation");
+    	outStream.println("B-Confirmed:" + 1);
+    	for(int i=0 ; i<nodeNum-1 ; i++) {
+    		nodeOutput[i].println("B-Confirmed:"+1);
+    	}
+    }
+    
     
     public static void corrupt_action(PrintWriter[] nodeOutput , PrintWriter clientOutput , BufferedReader nodeIn) {	//Corrupted node action goes here
     	String input;
     	
     	try {
 			while((input = nodeIn.readLine()) != null) {
-				clientOutput.println("Corrupt action from " + port + " (>_<)");
-				log("I'm corrupted (>_<)");
+//				clientOutput.println("Corrupt action from " + port + " (>_<)");
+				clientOutput.println("B-Confirmed:0"+":"+biggestRoundId);
+				for(int i=0 ; i<nodeNum-1 ; i++) {
+					nodeOutput[i].println("B-Confirmed:0"+":"+biggestRoundId);
+				}
 				if(input.startsWith("Uncorrupt") && input.endsWith(String.valueOf(port))) {
 					clientOutput.println("Uncorrupting " + port + " ~('0')~");
 					log("Uncorrupting  ~('0')~");
@@ -99,8 +112,25 @@ public class SimpleAcceptor {
 					Integer valInfo = Integer.parseInt(logArr[2]);
 					list.put(roundInfo, valInfo);
 					log("Stored round "+roundInfo+" with value "+valInfo);
+				} else if(inputAcpt.startsWith("Byzantine")) {
+					
 				} else {
 					log(inputAcpt);
+				}
+				
+				if(inputAcpt.startsWith("B-Confirmed")) {
+					int maj = 0;	// Count node majority, current node is 1 and proposer is 1 means we only need 1 more to reach majority
+					String[] logArr = inputAcpt.split(":"); // logArr[1] contain bzt value. logArr[0] is "B-Confirmed"
+					if(Integer.parseInt(logArr[1]) == 1) {
+						maj++;
+					}
+					
+					if(maj == 1) {
+						log("Changing bzt status to " + bztStatus);
+						bztStatus = true;
+						
+					}
+					
 				}
     			
 				inputAcpt = null;
@@ -227,6 +257,10 @@ public class SimpleAcceptor {
                     } else if(inputLine.startsWith("Corrupt") && arr[1].equals(String.valueOf(port))) {		// To simulate a corrupted node
                     	log("Corrupting node " + port);
                     	corrupt_action(acptOut , out , in);
+                    } else if(inputLine.startsWith("Byzantine") && arr[1].equals(String.valueOf(port))		// Specifically directed to
+                    			|| inputLine.startsWith("bztAll")) {		// Direct to all
+                    	log("Received bzt message");
+                    	byzantine_action(acptOut , out);	// Handle a byzantine behavior
                     } else if(isPaused == false) {
                         // Echo other messages
                         out.println("Server echoes: " + inputLine);

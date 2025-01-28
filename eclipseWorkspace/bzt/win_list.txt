@@ -8,4 +8,11 @@
 ** Finish log
 - 20/12 : test if corrupt_action function is running (no need to make it work yet) : achieved
 - 20/12 : make it so that it will output corrupt status to Proposer also (I'm too lazy to change terminals) : achieved
-- 20/12 : push changes to git (only push the bzt folder)
+- 20/12 : push changes to git (only push the bzt folder) : achieved
+- 21/12 : make corrupted node send out corrupted data : achieved
+- 21/12 : make a function to handle byzantine message specifically : achieved (function is incomplete)
+- 3/1	: Finish the byzantine_action function to send bzt message : achieved (function will now direct all received bzt message to other nodes)
+- 18/1	: Make another action to start Bzt consensus : achieved - Bzt will start but responses to it have not been implemented
+- 18/1	: Implement response to bzt consensus start	: not achieved -> abolished
+- 18/1	: Decided to hold onto consensus for now cause doing consensus back and forth would take a lot of time, will assume that no bzt action are available all the time.
+- 18/1	: Bzt might be working now, could use some polishing (We are missing the bzt status check and I have not test for functionality when 1 node fails) : achieved

@@ -2,6 +2,8 @@
 
 * Testing stuff
 - Remember to use the format "Corrupt:5000" and "Uncorrupt:5000" for corrupt and uncorrupt
+- Will use Byzantine:5000 for the bzt messages (will add functionality for other numbers later, I'm only doing ports for now)
+	+ So uncorrupted ones will always send 1 and corrupted will always send 0
 
 
 * Behaviour log

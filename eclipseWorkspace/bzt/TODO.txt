@@ -1,5 +1,9 @@
 ** Goal: Transform the Simple Proposer into nodes that can handle a byzantine failure
 
+
+- Bro you forgot to do the consensus for Bzt first :<
+	+ Because now there will be 2 different consensus type, it would be best to move each consensus phase to different functions, like prepare, accept and stuff
+	+ If any message begins with Prepare, then 'prepare_action' will be called and will use 'if(Prepare-B)' to determine whether that is a bzt message or not 
 - So if a node send out incorrect data then all node still have an agreement.
 - Make all node reach a consensus when there is data collision. So will wait for other nodes before pushing data to stack (will also need to account for timeout)
 - Could try something simple like 0 for 'false' and 1 for 'true' (for now, the node will just output '0' constantly) - ongoing
